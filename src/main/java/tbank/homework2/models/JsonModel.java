@@ -1,4 +1,4 @@
-package tbank.homework2.model;
+package tbank.homework2.models;
 
 public interface JsonModel {
 }
