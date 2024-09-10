@@ -4,6 +4,8 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static java.util.Objects.isNull;
+
 public class XmlProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(XmlProcessor.class);
@@ -11,6 +13,10 @@ public class XmlProcessor {
 
     public static String toXml(Object model) {
         logger.trace("Преобразую объект '{}' в xml", model);
+
+        if (isNull(model)) {
+            return "";
+        }
 
         try {
             return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(model);
