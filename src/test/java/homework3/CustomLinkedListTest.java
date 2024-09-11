@@ -27,6 +27,17 @@ public class CustomLinkedListTest {
     }
 
     @Test
+    public void testAddNullElement() {
+        CustomLinkedList<String> list = new CustomLinkedList<>();
+        list.add(null);
+        String expectedToStringResult = "[null]";
+        String actualResult = list.toString();
+        String nullError = format("Ожидал, что при добавлении null в список результат метода toString будет '%s', по факту получил '%s'",
+                expectedToStringResult, actualResult);
+        assertEquals(actualResult, expectedToStringResult, nullError);
+    }
+
+    @Test
     public void testGetValidIndex() {
         CustomLinkedList<String> list = new CustomLinkedList<>();
         list.add(firstElement);
@@ -173,5 +184,31 @@ public class CustomLinkedListTest {
         String actualString = list.toString();
         String error = format("Ожидал, что метод toString вернет строку '%s', по факту получил '%s'", expectedString, actualString);
         assertEquals(list.toString(), expectedString, error);
+    }
+
+    @Test
+    public void clearTest() {
+        CustomLinkedList<String> list = new CustomLinkedList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add("Element " + i);
+        }
+
+        list.clear();
+        int actualSize = list.getSize();
+        String error = format("Ожидал, что метод clear очистит список, по факту получил размер списка '%d'", actualSize);
+
+        assertEquals(list.getSize(), 0, error);
+    }
+
+    @Test
+    public void toStringWithEmptyListTest() {
+        CustomLinkedList<String> list = new CustomLinkedList<>();
+        String expectedToStringResult = "[]";
+        String actualToStringResult = list.toString();
+
+        String error = format("Ожидал, что метод toString для пустого списка будет возврашать '%s', по факту вернул '%s'",
+                expectedToStringResult, actualToStringResult);
+
+        assertEquals(actualToStringResult, expectedToStringResult, error);
     }
 }

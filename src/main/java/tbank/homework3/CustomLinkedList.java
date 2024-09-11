@@ -10,7 +10,8 @@ import static java.util.Objects.nonNull;
 
 public class CustomLinkedList<E> {
 
-    private int size = 0;
+    @Getter
+    private int size;
     private Node<E> head;
     private Node<E> tail;
 
@@ -25,7 +26,6 @@ public class CustomLinkedList<E> {
 
         if (size == 0) {
             head = newNode;
-            tail = newNode;
         } else {
             tail.setNext(newNode);
         }
@@ -39,6 +39,14 @@ public class CustomLinkedList<E> {
             throw new IndexOutOfBoundsException();
         }
 
+        if (index > size / 2) {
+            return getByIndexInSecondHalf(index);
+        } else {
+            return getByIndexInFirstHalf(index);
+        }
+    }
+
+    private E getByIndexInFirstHalf(int index) {
         Node<E> node = head;
         for (int i = 0; i < index; i++) {
             node = node.getNext();
@@ -47,35 +55,58 @@ public class CustomLinkedList<E> {
         return node.getItem();
     }
 
+    private E getByIndexInSecondHalf(int index) {
+        Node<E> node = tail;
+        int tailIndex = size - 1;
+        for (int i = 0; i < tailIndex - index; i++) {
+            node = node.getPrev();
+        }
+
+        return node.getItem();
+    }
+
     public void remove(E e) {
         if (isNull(head)) {
             return;
-        }
-
-        if (head.getItem().equals(e)) {
-            head = head.getNext();
-            if (head != null) {
-                head.setPrev(null);
-            }
+        } else if (head.getItem().equals(e)) {
+            removeHead();
             size--;
+        } else if (size == 1) {
             return;
+        }else if (tail.getItem().equals(e)) {
+            removeTail();
+            size--;
+        } else {
+            removeIntermediate(e);
         }
+    }
 
-        Node<E> node = head;
-        while (node != null) {
-            if (node.item.equals(e)) {
+    private void removeIntermediate(E e) {
+        Node<E> node = head.getNext();
+        while (nonNull(node.getNext())) {
+            if (node.getItem().equals(e)) {
                 Node<E> prev = node.getPrev();
                 Node<E> next = node.getNext();
                 if (prev != null) {
                     prev.setNext(next);
                 }
-                if (next != null) {
-                    next.setPrev(prev);
-                }
                 size--;
                 return;
             }
             node = node.getNext();
+        }
+    }
+
+    private void removeTail() {
+        Node<E> prevTailNode = tail.getPrev();
+        prevTailNode.setNext(null);
+        tail = prevTailNode;
+    }
+
+    private void removeHead() {
+        head = head.getNext();
+        if (head != null) {
+            head.setPrev(null);
         }
     }
 
@@ -121,12 +152,18 @@ public class CustomLinkedList<E> {
         return getMassiveAsString();
     }
 
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
     private E[] getMassiveValue() {
         E[] massive = (E[]) new Object[size];
-        Node<E> node = head; // исправлено, начинаем с head
+        Node<E> node = head;
         int index = 0;
 
-        while (node != null) { // исправлено условие
+        while (node != null) {
             massive[index] = node.getItem();
             node = node.getNext();
             index++;
@@ -155,7 +192,12 @@ public class CustomLinkedList<E> {
         stringBuilder.append("[");
 
         for (E elem : massive) {
-            stringBuilder.append(elem.toString());
+            if (isNull(elem)) {
+                stringBuilder.append("null");
+            } else {
+                stringBuilder.append(elem);
+            }
+
             stringBuilder.append(", ");
         }
 
@@ -165,10 +207,6 @@ public class CustomLinkedList<E> {
         stringBuilder.append("]");
 
         return stringBuilder.toString();
-    }
-
-    public int getSize() {
-        return size;
     }
 
     @Getter
