@@ -73,7 +73,7 @@ public class CustomLinkedList<E> {
             size--;
         } else if (size == 1) {
             return;
-        }else if (tail.getItem().equals(e)) {
+        } else if (tail.getItem().equals(e)) {
             removeTail();
             size--;
         } else {
