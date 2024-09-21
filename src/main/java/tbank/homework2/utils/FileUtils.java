@@ -28,6 +28,9 @@ public class FileUtils {
         } catch (IOException e) {
             logger.error("Ошибка при записи в файл: {}", e.getMessage());
             throw new IOException("Ошибка при записи в файл", e);
+        } catch (NullPointerException ex) {
+            logger.error("Ошибка при записи в файл, передан null для записи");
+            throw new NullPointerException("Ошибка при записи в файл, передан null для записи");
         }
     }
 }
