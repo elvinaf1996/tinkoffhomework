@@ -4,6 +4,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 tasks.withType(JavaCompile) {
@@ -21,4 +22,5 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.11.0'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
+    implementation 'felv.logger:log-starter:1.0-SNAPSHOT'
 }

@@ -41,3 +41,4 @@ build/
 /gradle/
 /.idea/
 /.gradle/
+/settings.gradle.kts
