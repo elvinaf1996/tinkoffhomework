@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
+import static java.lang.String.format;
+
 public class JsonProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonProcessor.class);
@@ -23,6 +25,10 @@ public class JsonProcessor {
 
         logger.info("Преобразование файла '{}' в объект '{}'", filePath, classType);
 
-        return objectMapper.readValue(file, classType);
+        try {
+            return objectMapper.readValue(file, classType);
+        } catch (Exception ex) {
+            throw new RuntimeException(format("Невозможно преобразовать файл по пути '%s' в класс '%s'", filePath, classType.getName()));
+        }
     }
 }
