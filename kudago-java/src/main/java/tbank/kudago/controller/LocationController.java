@@ -1,34 +1,34 @@
 package tbank.kudago.controller;
 
+import felv.logger.LogExecutionTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tbank.kudago.model.Location;
-import tbank.kudago.utils.DataStore;
+import tbank.kudago.repository.LocationRepository;
 
 import java.util.List;
 
 @RestController
+@LogExecutionTime
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/locations")
 public class LocationController {
 
-    private final DataStore<Location> locationStore;
+    private final LocationRepository locationRepository;
 
     @GetMapping()
     private List<Location> getAllLocations() {
-        return locationStore.getAll();
+        return locationRepository.getAll();
     }
 
     @GetMapping("/{id}")
     private Location getLocationById(@PathVariable Long id) {
-        return locationStore.getById(id);
+        return locationRepository.getById(id);
     }
 
     @PostMapping()
     private Location createLocation(@RequestBody Location location) {
-        locationStore.save(location);
-
-        return location;
+        return locationRepository.save(location);
     }
 
     @PutMapping("/{id}")
@@ -46,6 +46,6 @@ public class LocationController {
 
     @DeleteMapping("/{id}")
     private void deleteLocationById(@PathVariable Long id) {
-        locationStore.deleteById(id);
+        locationRepository.deleteById(id);
     }
 }

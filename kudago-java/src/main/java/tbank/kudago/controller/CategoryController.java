@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import felv.logger.LogExecutionTime;
 import tbank.kudago.model.Category;
-import tbank.kudago.utils.DataStore;
+import tbank.kudago.repository.CategoryRepository;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/v1/places/categories")
 public class CategoryController {
 
-    private final DataStore<Category> categoryStore;
+    private final CategoryRepository categoryStore;
 
     @GetMapping
     public List<Category> getAllCategories() {
