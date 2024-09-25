@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 //@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
+//@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class KudaGoSpringApplication {
 
     public static void main(String[] args) {

@@ -20,7 +20,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.17.2'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-aop:3.3.4'
-    implementation 'felv.logger:log-starter:1.0-SNAPSHOT'
+//    implementation 'felv.logger:log-starter:1.0-SNAPSHOT'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
