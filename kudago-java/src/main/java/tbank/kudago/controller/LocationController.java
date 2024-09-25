@@ -1,5 +1,6 @@
 package tbank.kudago.controller;
 
+import felv.logger.LogExecutionTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tbank.kudago.model.Location;
@@ -10,41 +11,40 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/locations")
-//@LogExecutionTime
+@LogExecutionTime
 public class LocationController {
 
-    private final LocationRepository locationStore;
+    private final LocationRepository locationRepository;
 
-    @GetMapping()
-    private List<Location> getAllLocations() {
-        return locationStore.getAll();
+    @LogExecutionTime
+    @GetMapping
+    public List<Location> getAllLocation() {
+        return locationRepository.getAll();
     }
 
     @GetMapping("/{id}")
-    private Location getLocationById(@PathVariable Long id) {
-        return locationStore.getById(id);
+    public Location getLocationById(@PathVariable Long id) {
+        return locationRepository.getById(id);
     }
 
     @PostMapping()
-    private Location createLocation(@RequestBody Location location) {
-        return locationStore.save(location);
+    public Location addLocation(@RequestBody Location location) {
+        locationRepository.save(location);
+
+        return location;
     }
 
     @PutMapping("/{id}")
-    private Location updateLocationById(@PathVariable Long id, @RequestBody Location newLocationData) {
+    public Location putLocationById(@PathVariable Long id, @RequestBody Location newLocationData) {
         Location location = getLocationById(id);
-        location.setCoords(newLocationData.getCoords());
-        location.setSlug(newLocationData.getSlug());
         location.setName(newLocationData.getName());
-        location.setTimezone(newLocationData.getTimezone());
-        location.setCurrency(newLocationData.getCurrency());
-        location.setLanguage(newLocationData.getLanguage());
+        location.setSlug(newLocationData.getSlug());
 
         return location;
     }
 
     @DeleteMapping("/{id}")
-    private void deleteLocationById(@PathVariable Long id) {
-        locationStore.deleteById(id);
+    public void deleteLocationById(@PathVariable Long id) {
+        locationRepository.deleteById(id);
     }
 }

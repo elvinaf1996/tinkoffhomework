@@ -7,10 +7,10 @@
         </encoder>
     </appender>
 
-    <logger name="tbank.kudago" level="ERROR" />
-    <logger name="tbank.kudago" level="INFO" />
-    <logger name="tbank.kudago" level="WARN" />
-    <logger name="tbank.kudago" level="DEBUG" />
+    <logger name="felv.logger" level="ERROR" />
+    <logger name="felv.logger" level="INFO" />
+    <logger name="felv.logger" level="WARN" />
+    <logger name="felv.logger" level="DEBUG" />
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />

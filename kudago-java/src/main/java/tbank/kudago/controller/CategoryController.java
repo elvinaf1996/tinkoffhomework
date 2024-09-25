@@ -14,21 +14,21 @@ import java.util.List;
 @LogExecutionTime
 public class CategoryController {
 
-    private final CategoryRepository categoryStore;
+    private final CategoryRepository categoryRepository;
 
     @GetMapping
     public List<Category> getAllCategories() {
-        return categoryStore.getAll();
+        return categoryRepository.getAll();
     }
 
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable Long id) {
-        return categoryStore.getById(id);
+        return categoryRepository.getById(id);
     }
 
     @PostMapping()
     public Category addCategory(@RequestBody Category category) {
-        categoryStore.save(category);
+        categoryRepository.save(category);
 
         return category;
     }
@@ -44,6 +44,6 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public void deleteCategoryById(@PathVariable Long id) {
-        categoryStore.deleteById(id);
+        categoryRepository.deleteById(id);
     }
 }

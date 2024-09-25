@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class CategoryRepository {
+
     private final DataStore<Category> categoryStore;
 
     public Category save(Category category) {

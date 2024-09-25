@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class LocationRepository {
+
     private final DataStore<Location> locationStore;
 
     public Location save(Location location) {

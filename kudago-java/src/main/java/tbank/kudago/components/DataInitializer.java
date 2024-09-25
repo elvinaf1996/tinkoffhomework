@@ -22,8 +22,8 @@ import static java.util.Objects.nonNull;
 public class DataInitializer implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
     private final RestTemplate restTemplate;
-    private final CategoryRepository categoryStore;
-    private final LocationRepository locationStore;
+    private final CategoryRepository categoryRepository;
+    private final LocationRepository locationRepository;
 
     private final String LOCATION_URL = "https://kudago.com/public-api/v1.2/locations/?lang=ru&fields=slug,name,timezone,coords,language";
     private final String CATEGORY_URL = "https://kudago.com/public-api/v1.2/place-categories/?lang=ru&fields=name,slug";
@@ -41,8 +41,8 @@ public class DataInitializer implements CommandLineRunner {
 
         Category[] categoriesMass = restTemplate.getForObject(CATEGORY_URL, Category[].class);
         if (nonNull(categoriesMass) && categoriesMass.length != 0) {
-            Arrays.asList(categoriesMass).forEach(categoryStore::save);
-            logger.info("Saved location: {}", categoryStore.getAll());
+            Arrays.asList(categoriesMass).forEach(categoryRepository::save);
+            logger.info("Saved location: {}", categoryRepository.getAll());
         }
         logger.info("Category initialization completed.");
     }
@@ -52,8 +52,8 @@ public class DataInitializer implements CommandLineRunner {
 
         Location[] locationMass = restTemplate.getForObject(LOCATION_URL, Location[].class);
         if (nonNull(locationMass) && locationMass.length != 0) {
-            Arrays.asList(locationMass).forEach(locationStore::save);
-            logger.info("Saved cities: {}", locationStore.getAll());
+            Arrays.asList(locationMass).forEach(locationRepository::save);
+            logger.info("Saved cities: {}", locationRepository.getAll());
         }
         logger.info("Cities initialization completed.");
     }
