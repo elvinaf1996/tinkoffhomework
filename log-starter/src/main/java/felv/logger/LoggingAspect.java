@@ -1,6 +1,5 @@
-package tbank.kudago.logger;
+package felv.logger;
 
-import jakarta.annotation.PostConstruct;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

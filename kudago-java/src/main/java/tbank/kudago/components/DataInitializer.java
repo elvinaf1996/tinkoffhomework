@@ -1,22 +1,16 @@
 package tbank.kudago.components;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-//import tbank.kudago.LogExecutionTime;
-import tbank.kudago.logger.LogExecutionTime;
+import felv.logger.LogExecutionTime;
 import tbank.kudago.model.Category;
 import tbank.kudago.model.Location;
-//import tbank.kudago.repository.CategoryRepository;
-//import tbank.kudago.repository.LocationRepository;
 import tbank.kudago.repository.CategoryRepository;
 import tbank.kudago.repository.LocationRepository;
-import tbank.kudago.utils.DataStore;
 
 import java.util.Arrays;
 
@@ -28,8 +22,6 @@ import static java.util.Objects.nonNull;
 public class DataInitializer implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
     private final RestTemplate restTemplate;
-//    private final DataStore<Category> categoryStore;
-//    private final DataStore<Location> locationStore;
     private final CategoryRepository categoryStore;
     private final LocationRepository locationStore;
 

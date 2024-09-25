@@ -2,7 +2,6 @@ package tbank.kudago.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tbank.kudago.logger.LogExecutionTime;
 import tbank.kudago.model.Location;
 import tbank.kudago.repository.LocationRepository;
 
@@ -11,7 +10,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/locations")
-@LogExecutionTime
+//@LogExecutionTime
 public class LocationController {
 
     private final LocationRepository locationStore;

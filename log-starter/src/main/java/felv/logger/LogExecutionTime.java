@@ -1,4 +1,4 @@
-package tbank.kudago.logger;
+package felv.logger;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
