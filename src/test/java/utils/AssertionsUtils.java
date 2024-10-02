@@ -3,7 +3,16 @@ package utils;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
 
+import java.util.List;
+
+import static java.lang.String.format;
+
 public class AssertionsUtils {
+
+    public static void assertListIsEquals(List<?> actualValues, List<?> expectedValues) {
+        String error = format("Полученный список: '%s' не соответсвует ожидаемому: '%s'", actualValues, expectedValues);
+        assertEquals(actualValues, expectedValues, error);
+    }
 
     public static void assertEquals(Object actual, Object expected, String error) {
         Assertions.assertThat(actual)
