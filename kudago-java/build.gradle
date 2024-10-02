@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'jacoco'
 }
 
 repositories {
@@ -28,5 +29,22 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it) {
+                exclude 'tbank.kudago.model/**'
+            }
+        }))
+    }
+
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
+    }
 }
