@@ -3,6 +3,7 @@ package tbank.kudago.controller;
 import felv.logger.LogExecutionTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tbank.kudago.exception.LocationNotFoundException;
 import tbank.kudago.model.Location;
 import tbank.kudago.repository.LocationRepository;
 
@@ -24,7 +25,8 @@ public class LocationController {
 
     @GetMapping("/{id}")
     public Location getLocationById(@PathVariable Long id) {
-        return locationRepository.getById(id);
+        return locationRepository.getById(id)
+                .orElseThrow(() -> new LocationNotFoundException(id));
     }
 
     @PostMapping()
