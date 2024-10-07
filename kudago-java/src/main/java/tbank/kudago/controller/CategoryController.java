@@ -3,6 +3,7 @@ package tbank.kudago.controller;
 import felv.logger.LogExecutionTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tbank.kudago.exception.CategoryNotFoundException;
 import tbank.kudago.model.Category;
 import tbank.kudago.repository.CategoryRepository;
 
@@ -23,7 +24,8 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable Long id) {
-        return categoryRepository.getById(id);
+        return categoryRepository.getById(id)
+                .orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
     @PostMapping()

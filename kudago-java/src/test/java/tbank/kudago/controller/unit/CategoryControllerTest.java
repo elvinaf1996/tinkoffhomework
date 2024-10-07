@@ -1,4 +1,4 @@
-package tbank.kudago.controller;
+package tbank.kudago.controller.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -8,11 +8,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import tbank.kudago.controller.CategoryController;
 import tbank.kudago.model.Category;
 import tbank.kudago.repository.CategoryRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -30,7 +32,7 @@ public class CategoryControllerTest {
     private final String API_URL = "/api/v1/places/categories";
 
     @Test
-    public void getAllCategories() throws Exception {
+    public void successGetAllCategories() throws Exception {
         List<Category> categories = Arrays.asList(
                 new Category("Slug1", "Name1"),
                 new Category("Slug2", "Name2")
@@ -48,11 +50,11 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void getCategoryById() throws Exception {
+    public void successGetCategoryById() throws Exception {
         Category category = new Category("Slug1", "Name1");
-        when(categoryStore.getById(1L)).thenReturn(category);
+        when(categoryStore.getById(1L)).thenReturn(Optional.of(category));
 
-        mockMvc.perform(get(API_URL + "/1"))
+        mockMvc.perform(get(API_URL + "/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("Name1"))
@@ -60,7 +62,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void addCategory() throws Exception {
+    public void successAddCategory() throws Exception {
         Category newCategory = new Category("Slug1", "Name1");
         when(categoryStore.save(any(Category.class))).thenReturn(newCategory);
 
@@ -73,10 +75,10 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void putCategoryById_ShouldUpdateCategory() throws Exception {
+    public void successPutCategoryById() throws Exception {
         long categoryId = 1L;
         Category existingCategory = new Category("Old Slug", "Old Name");
-        when(categoryStore.getById(categoryId)).thenReturn(existingCategory);
+        when(categoryStore.getById(categoryId)).thenReturn(Optional.of(existingCategory));
 
         Category newCategoryData = new Category("New Slug", "New Name");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -93,12 +95,32 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void deleteCategoryById() throws Exception {
+    public void successDeleteCategoryById() throws Exception {
         doNothing().when(categoryStore).deleteById(1L);
 
-        mockMvc.perform(delete(API_URL + "/1"))
+        mockMvc.perform(delete(API_URL + "/{id}", 1))
                 .andExpect(status().isOk());
 
         verify(categoryStore, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void failureGetCategoryById() throws Exception {
+        when(categoryStore.getById(1L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get(API_URL + "/{id}", 1))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void failurePutCategoryById() throws Exception {
+        when(categoryStore.getById(1L)).thenReturn(Optional.empty());
+
+        Category category = new Category("slug", "name");
+
+        mockMvc.perform(put(API_URL + "/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(category)))
+                .andExpect(status().isNotFound());
     }
 }

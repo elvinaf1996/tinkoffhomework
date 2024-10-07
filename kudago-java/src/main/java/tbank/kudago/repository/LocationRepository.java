@@ -6,6 +6,7 @@ import tbank.kudago.model.Location;
 import tbank.kudago.utils.DataStore;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,8 +22,8 @@ public class LocationRepository {
         return locationStore.getAll();
     }
 
-    public Location getById(Long id) {
-        return locationStore.getById(id);
+    public Optional<Location> getById(Long id) {
+        return Optional.ofNullable(locationStore.getById(id));
     }
 
     public void deleteById(Long id) {
