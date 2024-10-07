@@ -111,7 +111,7 @@ public class LocationControllerTest {
     public void failureGetLocationById() throws Exception {
         when(locationRepository.getById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get(API_URL + "/1"))
+        mockMvc.perform(get(API_URL + "//{id}", 1))
                 .andExpect(status().isNotFound());
     }
 
@@ -121,7 +121,7 @@ public class LocationControllerTest {
 
         Location location = new Location("slug", "name");
 
-        mockMvc.perform(put(API_URL + "/1")
+        mockMvc.perform(put(API_URL + "/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(location)))
                 .andExpect(status().isNotFound());

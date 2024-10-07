@@ -74,7 +74,7 @@ public class LocationControllerTest {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Could not found location with id " + putIndex));
         Category newCategory = new Category(oldLocation.getSlug().concat(" New"), oldLocation.getName().concat(" New"));
-        mockMvc.perform(put(API_URL + "/" + putIndex)
+        mockMvc.perform(put(API_URL + "/{id}", putIndex)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCategory)))
                 .andExpect(status().isOk());
@@ -91,9 +91,9 @@ public class LocationControllerTest {
     public void successDeleteById() throws Exception {
         List<Location> locationList = getLocationList();
         int putIndex = new Random().nextInt(locationList.size());
-        mockMvc.perform(delete(API_URL + "/" + putIndex))
+        mockMvc.perform(delete(API_URL + "/{id}", putIndex))
                 .andExpect(status().isOk());
-        mockMvc.perform(get(API_URL + "/" + putIndex))
+        mockMvc.perform(get(API_URL + "/{id}", putIndex))
                 .andExpect(status().isNotFound());
     }
 
@@ -101,7 +101,7 @@ public class LocationControllerTest {
     public void failureGetCategoryById() throws Exception {
         List<Location> locationList = getLocationList();
 
-        mockMvc.perform(get(API_URL + "/" + locationList.size() + 1))
+        mockMvc.perform(get(API_URL + "/{id}", locationList.size() + 10))
                 .andExpect(status().isNotFound());
     }
 
@@ -111,7 +111,7 @@ public class LocationControllerTest {
 
         Category category = new Category("slug", "name");
 
-        mockMvc.perform(put(API_URL + "/" + locationList.size() + 1)
+        mockMvc.perform(put(API_URL + "/{id}", locationList.size() + 10)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(category)))
                 .andExpect(status().isNotFound());

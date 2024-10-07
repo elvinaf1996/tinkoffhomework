@@ -54,7 +54,7 @@ public class CategoryControllerTest {
         Category category = new Category("Slug1", "Name1");
         when(categoryStore.getById(1L)).thenReturn(Optional.of(category));
 
-        mockMvc.perform(get(API_URL + "/1"))
+        mockMvc.perform(get(API_URL + "/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("Name1"))
@@ -98,7 +98,7 @@ public class CategoryControllerTest {
     public void successDeleteCategoryById() throws Exception {
         doNothing().when(categoryStore).deleteById(1L);
 
-        mockMvc.perform(delete(API_URL + "/1"))
+        mockMvc.perform(delete(API_URL + "/{id}", 1))
                 .andExpect(status().isOk());
 
         verify(categoryStore, times(1)).deleteById(1L);
@@ -108,7 +108,7 @@ public class CategoryControllerTest {
     public void failureGetCategoryById() throws Exception {
         when(categoryStore.getById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get(API_URL + "/1"))
+        mockMvc.perform(get(API_URL + "/{id}", 1))
                 .andExpect(status().isNotFound());
     }
 
@@ -118,7 +118,7 @@ public class CategoryControllerTest {
 
         Category category = new Category("slug", "name");
 
-        mockMvc.perform(put(API_URL + "/1")
+        mockMvc.perform(put(API_URL + "/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(category)))
                 .andExpect(status().isNotFound());
