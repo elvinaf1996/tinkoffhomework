@@ -13,6 +13,7 @@ import tbank.currencies.utils.EValute;
 import java.util.*;
 
 import static java.lang.Double.parseDouble;
+import static tbank.currencies.utils.DoubleUtils.roundToTwoDecimalPlaces;
 import static tbank.currencies.utils.StringUtils.generateLatinString;
 import static tbank.currencies.utils.StringUtils.getDateTodayAsPattern;
 
@@ -47,7 +48,8 @@ public abstract class BaseCurrencyTest {
 
     protected void saveValuteAndValues(List<Valute> valuteList) {
         for (Valute valute : valuteList) {
-            valutesWithValue.put(valute.getCharCode(), parseDouble(valute.getVunitRate().replace(",", ".")));
+            double valuteValue = parseDouble(valute.getVunitRate().replace(",", "."));
+            valutesWithValue.put(valute.getCharCode(), roundToTwoDecimalPlaces(valuteValue));
         }
     }
 

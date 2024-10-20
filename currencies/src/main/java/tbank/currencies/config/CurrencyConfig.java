@@ -6,7 +6,6 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-//@EnableSwagger2
 public class CurrencyConfig {
 
     @Bean
@@ -15,13 +14,4 @@ public class CurrencyConfig {
         restTemplate.getMessageConverters().add(new MappingJackson2XmlHttpMessageConverter());
         return restTemplate;
     }
-
-//    @Bean
-//    public Docket api() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("tbank.currencies"))
-//                .paths(PathSelectors.any())
-//                .build();
-//    }
 }
