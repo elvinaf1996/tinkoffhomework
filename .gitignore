@@ -42,3 +42,4 @@ build/
 /.idea/
 /.gradle/
 /settings.gradle.kts
+/customJacocoReportDir/
